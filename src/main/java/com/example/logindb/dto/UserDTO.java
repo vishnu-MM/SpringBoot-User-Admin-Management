@@ -1,32 +1,28 @@
 package com.example.logindb.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.*;
+import lombok.*;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class UserDTO {
 
     private int id;
 
-    @NotEmpty(message = "Name can not be null ")
+    @NotEmpty(message = "Name must be filled")
     private String name;
 
-    @Email
-    @NotEmpty(message = "Email can not be null ")
+    @Email(message = "Invalid email address")
+    @NotEmpty(message = "Email should be filled")
     private String username;
 
     private String role;
 
-    @NotEmpty(message = "Password can not be null ")
+    @NotEmpty
+    @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
-
-    // Constructors, getters, and setters
 }

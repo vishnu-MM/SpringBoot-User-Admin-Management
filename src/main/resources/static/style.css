@@ -1,0 +1,12 @@
+
+.msg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+}
+  
+.msg {
+    text-align: center;
+}

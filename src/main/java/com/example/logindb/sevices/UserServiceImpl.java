@@ -24,22 +24,21 @@ public class UserServiceImpl implements UserService {
         user.setName(userDTO.getName());
         user.setUsername(userDTO.getUsername());
         user.setRole("USER");
-        user.setPassword(userDTO.getPassword()); // add password encoder
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userRepository.save(user);
     }
 
     @Override
-    public User updateUser(UserDTO userDTO) {
-        int id=userDTO.getId();
-        User existing = userRepository.findById(id);
+    public void updateUser(UserDTO userDTO) {
+        User existing = userRepository.findById( userDTO.getId() );
         existing.setName(userDTO.getName());
         existing.setUsername(userDTO.getUsername());
-        return userRepository.save(existing);
+        userRepository.save(existing);
     }
 
     @Override
-    public User deleteUserById(int id) {
-        return userRepository.deleteById(id);
+    public void deleteUserById(int id) {
+        userRepository.deleteById(id);
     }
 
     @Override
@@ -48,10 +47,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO findById(int id) {
+        User existingUser =  userRepository.findById(id);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(existingUser.getId());
+        userDTO.setUsername(existingUser.getUsername());
+        userDTO.setName(existingUser.getName());
+        userDTO.setPassword(existingUser.getPassword());
+        return userDTO;
+    }
+
+    @Override
     public List<UserDTO> findAllByRole(String role) {
         List<User> users = userRepository.findAllByRole(role);
         return  users.stream()
-                .map( user -> convertUserToDto(user))
+//                .map( user -> convertUserToDto(user))
+                .map(this::convertUserToDto)
                 .collect(Collectors.toList());
     }
 
@@ -59,7 +70,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> searchUser(String role, String name) {
         List<User> users = userRepository.findAllByRoleAndNameStartingWithIgnoreCase(role,name);
-        return users.stream().map((user) -> convertUserToDto(user))
+        return users.stream()
+//                .map((user) -> convertUserToDto(user))
+                .map(this::convertUserToDto)
                 .collect(Collectors.toList());
     }
 
@@ -70,6 +83,14 @@ public class UserServiceImpl implements UserService {
         userDto.setId(user.getId());
         userDto.setName(user.getName());
         userDto.setUsername(user.getUsername());
+        userDto.setRole(user.getRole());
         return userDto;
     }
+
+    @Override
+    public boolean isExists(String email){
+        return userRepository.existsByUsername(email);
+    }
+
+
 }

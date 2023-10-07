@@ -1,4 +1,4 @@
-package com.example.logindb.security;
+package com.example.logindb.configuration;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,8 +11,10 @@ import java.util.Collection;
 public class CustomUserDetails extends User{
 
     private String name;
-    public CustomUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities , String name) {
+    public CustomUserDetails(String username, String password,
+                             Collection<? extends GrantedAuthority> authorities , String name) {
         super(username, password, authorities);
         this.name = name;
     }
+
 }

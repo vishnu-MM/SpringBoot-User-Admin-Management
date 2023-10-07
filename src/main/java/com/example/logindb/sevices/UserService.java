@@ -7,11 +7,13 @@ import java.util.List;
 public interface UserService {
 
     void saveUser(UserDTO userDTO);
-    User updateUser(UserDTO userDTO);
-    User deleteUserById(int id);
+    void deleteUserById(int id);
+    void updateUser(UserDTO userDTO);
 
+    UserDTO findById(int id);
     User findByUsername(String email);
     List<UserDTO> findAllByRole(String role);
     List<UserDTO> searchUser(String role,String name);
 
+    boolean isExists(String email);
 }

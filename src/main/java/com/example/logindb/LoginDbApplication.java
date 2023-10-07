@@ -10,14 +10,4 @@ public class LoginDbApplication {
 		SpringApplication.run(LoginDbApplication.class, args);
 	}
 
-//	public CommandLineRunner commandLineRunner( AppDAO appDAO ) {
-//
-//		return runner-> {
-//			createUser(appDAO);
-//		};
-//	}
-//
-//	private void createUser(AppDAO appDAO) {
-//
-//	}
 }

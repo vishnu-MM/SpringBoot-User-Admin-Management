@@ -1,8 +1,11 @@
 package com.example.logindb.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
+import org.springframework.validation.annotation.Validated;
 
 
 @Entity
@@ -12,6 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Validated
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +31,9 @@ public class User {
     @Column(name = "role")
     private String role;
 
+    @NotBlank(message = "Password can not be null ")
+    @NotNull(message = "Password can not be null ")
+    @NotEmpty(message = "Password can not be null ")
     @Column(name = "password")
     private String password;
 
